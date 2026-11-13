@@ -157,3 +157,18 @@ mvn test -Dkeyword=自动化测试    # 换百度搜索词
 | 未登录用例没跳转 | 会话 Cookie 残留 | 该用例每条都新开浏览器，正常不会出现；检查 `SITE` 单例是否被 `stop()` |
 | 百度用例 skipped | IP 被限流弹验证码 | 等几分钟再跑，或删掉 `testng.xml` 里 `baidu` 段 |
 | 百度结果 0 条 | 百度改版，选择器失效 | 改 `baidu/BaiduPage.RESULTS` |
+
+## 性能压测（perf/）
+
+JMeter 5.6.3。被测系统需要先起来（后端 8080）。
+
+```
+# 注册接口：10 / 20 / 30 / 50 / 100 / 200 并发
+jmeter -n -t perf/Register.jmx -l reg_100.jtl -Jport=8080 -Jthreads=100 -Jramp=1
+# 登录并申请实习
+jmeter -n -t perf/LoginApply.jmx -l la_100.jtl -Jport=8080 -Jthreads=100 -Jramp=5 -Jloops=3
+# 生成 HTML 报表
+jmeter -g reg_100.jtl -o report/reg_100
+```
+
+线程数与爬坡时间用 `-J` 传入，同一份脚本可跑各档压力，不重复改文件。
