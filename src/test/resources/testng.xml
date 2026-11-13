@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="auto-test" verbose="1">
+
+    <!-- auth：注册 / 登录，本地实习系统，不碰外网 -->
+    <test name="auth">
+        <classes>
+            <class name="auto.auth.test.RegisterTest"/>
+            <class name="auto.auth.test.LoginTest"/>
+        </classes>
+    </test>
+
+    <!-- train：注册 → 登录 → 申请实习，完整业务链路 -->
+    <test name="train">
+        <classes>
+            <class name="auto.train.test.InternshipFlowTest"/>
+        </classes>
+    </test>
+
+    <!-- baidu：真实外网，可能被限流 -->
+    <test name="baidu">
+        <classes>
+            <class name="auto.baidu.test.BaiduSearchTest"/>
+        </classes>
+    </test>
+
+</suite>
